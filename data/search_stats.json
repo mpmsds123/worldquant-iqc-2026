@@ -1,0 +1,36 @@
+{
+ "files": 34,
+ "rows": 25123,
+ "unique": 20959,
+ "gate": 182,
+ "sources": [
+  {
+   "label": "Dataset sweeps",
+   "n": 4618,
+   "pass": 86,
+   "rate": 1.862278042442616,
+   "note": "one dataset's documentation read end to end, then its fields swept through a template"
+  },
+  {
+   "label": "LLM research pipeline",
+   "n": 2212,
+   "pass": 30,
+   "rate": 1.3562386980108498,
+   "note": "an MCP server giving a model the simulation API, the platform docs and arXiv"
+  },
+  {
+   "label": "Systematic expansion",
+   "n": 12264,
+   "pass": 59,
+   "rate": 0.48108284409654267,
+   "note": "operators crossed with fields, no prior about which pairs should work"
+  },
+  {
+   "label": "Paper replication",
+   "n": 1865,
+   "pass": 7,
+   "rate": 0.37533512064343166,
+   "note": "a published finding restated as an expression, with the operators doing the translating"
+  }
+ ]
+}

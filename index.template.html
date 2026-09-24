@@ -1,0 +1,906 @@
+<title>WorldQuant International Quant Championship 2026</title>
+<style>
+:root{
+  color-scheme: light;
+  --plane:#f4f5f7; --surface:#fcfcfd; --sunk:#eef0f4;
+  --ink:#0e1116; --ink2:#4d535c; --muted:#868c95;
+  --rule:#e0e3e8; --rule-strong:#c8ced7;
+  --accent:#2a78d6; --accent-soft:rgba(42,120,214,.12);
+  --accent2:#eb6834; --accent2-soft:rgba(235,104,52,.12);
+  --grid:#e6e8ed; --axis:#c8ced7;
+  --ramp1:#86b6ef; --ramp2:#5598e7; --ramp3:#3987e5; --ramp4:#256abf; --ramp5:#184f95;
+  --display: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --measure: 68ch;
+}
+@media (prefers-color-scheme: dark){
+  :root:where(:not([data-theme="light"])){
+    color-scheme: dark;
+    --plane:#0c0e11; --surface:#16191d; --sunk:#1c2026;
+    --ink:#f2f4f7; --ink2:#aab2bd; --muted:#7c848e;
+    --rule:#262b31; --rule-strong:#39414a;
+    --accent:#3987e5; --accent-soft:rgba(57,135,229,.16);
+    --accent2:#d95926; --accent2-soft:rgba(217,89,38,.16);
+    --grid:#22272d; --axis:#39414a;
+    --ramp1:#184f95; --ramp2:#256abf; --ramp3:#2a78d6; --ramp4:#3987e5; --ramp5:#5598e7;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --plane:#0c0e11; --surface:#16191d; --sunk:#1c2026;
+  --ink:#f2f4f7; --ink2:#aab2bd; --muted:#7c848e;
+  --rule:#262b31; --rule-strong:#39414a;
+  --accent:#3987e5; --accent-soft:rgba(57,135,229,.16);
+  --accent2:#d95926; --accent2-soft:rgba(217,89,38,.16);
+  --grid:#22272d; --axis:#39414a;
+  --ramp1:#184f95; --ramp2:#256abf; --ramp3:#2a78d6; --ramp4:#3987e5; --ramp5:#5598e7;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--plane); color:var(--ink);
+  font-family:var(--body); font-size:17px; line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1060px; margin:0 auto; padding:0 24px 96px}
+.col{max-width:var(--measure)}
+p{margin:0 0 1.1em}
+a{color:var(--accent)}
+h1,h2,h3{font-family:var(--display); font-weight:600; text-wrap:balance; margin:0}
+h1{font-size:clamp(2.1rem,4.6vw,3.1rem); line-height:1.1; letter-spacing:-.015em}
+h2{font-size:clamp(1.5rem,2.6vw,1.95rem); line-height:1.2; letter-spacing:-.01em}
+h3{font-size:1.16rem; line-height:1.3}
+code,.mono{font-family:var(--mono); font-size:.86em}
+strong{font-weight:640}
+em{font-style:italic}
+
+.eyebrow{
+  font-family:var(--mono); font-size:.7rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted);
+}
+
+/* ---- header ------------------------------------------------------------ */
+header.page{padding:88px 0 40px; border-bottom:1px solid var(--rule)}
+header.page .lede{
+  font-size:1.22rem; line-height:1.55; color:var(--ink2);
+  max-width:60ch; margin-top:22px;
+}
+.byline{margin-top:28px; font-family:var(--mono); font-size:.78rem; color:var(--muted)}
+
+/* ---- sections ---------------------------------------------------------- */
+section{padding:56px 0 0}
+section > .col > h2, section > h2{margin-bottom:8px}
+.section-note{
+  font-family:var(--mono); font-size:.74rem; color:var(--muted);
+  letter-spacing:.04em; margin:0 0 26px;
+}
+
+/* ---- stat tiles -------------------------------------------------------- */
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:1px;
+  background:var(--rule); border:1px solid var(--rule); margin:32px 0 12px}
+.tile{background:var(--surface); padding:20px 22px 22px}
+.tile .k{font-family:var(--mono); font-size:.68rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted)}
+.tile .v{font-size:2.1rem; line-height:1.1; margin-top:10px; letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums}
+.tile .s{font-size:.84rem; color:var(--ink2); margin-top:6px}
+.tile.lead .v{color:var(--accent)}
+
+/* ---- figures ----------------------------------------------------------- */
+figure{margin:34px 0 0; background:var(--surface); border:1px solid var(--rule); padding:22px 22px 18px}
+figure .fig-title{font-family:var(--body); font-weight:620; font-size:.98rem; margin-bottom:2px}
+figure .fig-sub{font-size:.84rem; color:var(--ink2); margin-bottom:18px; max-width:70ch}
+figcaption{margin-top:14px; padding-top:12px; border-top:1px solid var(--rule);
+  font-size:.82rem; color:var(--ink2)}
+.chart-scroll{overflow-x:auto}
+svg{display:block; max-width:100%; height:auto}
+.legend{display:flex; flex-wrap:wrap; gap:16px; margin-bottom:14px;
+  font-size:.8rem; color:var(--ink2)}
+.legend span{display:inline-flex; align-items:center; gap:7px}
+.swatch{width:11px; height:11px; border-radius:2px; flex:none}
+
+text{font-family:var(--body)}
+.tick{fill:var(--muted); font-size:11px; font-variant-numeric:tabular-nums}
+.axlabel{fill:var(--muted); font-size:11px; letter-spacing:.05em; text-transform:uppercase;
+  font-family:var(--mono)}
+.dlabel{fill:var(--ink); font-size:12px; font-variant-numeric:tabular-nums}
+.dlabel.sub{fill:var(--ink2); font-size:11px}
+.gridline{stroke:var(--grid); stroke-width:1}
+.axisline{stroke:var(--axis); stroke-width:1}
+
+/* ---- tooltip ----------------------------------------------------------- */
+.tt{position:fixed; pointer-events:none; z-index:50; opacity:0; transition:opacity .1s;
+  background:var(--surface); border:1px solid var(--rule-strong); padding:8px 11px;
+  font-size:.8rem; line-height:1.45; box-shadow:0 6px 20px rgba(0,0,0,.13);
+  font-variant-numeric:tabular-nums; max-width:260px}
+.tt b{font-weight:640}
+.tt .m{font-family:var(--mono); font-size:.76rem; color:var(--ink2)}
+
+/* ---- tables ------------------------------------------------------------ */
+.tablewrap{overflow-x:auto; margin-top:26px; border:1px solid var(--rule); background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:.84rem}
+th,td{text-align:right; padding:7px 9px; border-bottom:1px solid var(--rule); white-space:nowrap}
+th{font-family:var(--mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--muted); font-weight:400; position:sticky; top:0; background:var(--surface)}
+td:first-child,th:first-child{text-align:left; font-family:var(--mono); font-size:.78rem}
+#summary-table{table-layout:fixed; min-width:420px}
+#summary-table th:nth-child(1),#summary-table td:nth-child(1){width:34%}
+td.expr{text-align:left; white-space:normal; padding-left:14px;
+  font-family:var(--mono); font-size:.7rem; color:var(--ink2); line-height:1.45;
+  overflow-wrap:anywhere; word-break:break-word}
+td.expr span{display:block; font-family:var(--mono); font-size:.7rem;
+  color:var(--ink2); line-height:1.45; word-break:break-word}
+tbody tr:hover{background:var(--sunk)}
+td{font-variant-numeric:tabular-nums}
+.pill{display:inline-block; padding:1px 7px; border-radius:999px; font-family:var(--mono);
+  font-size:.68rem; letter-spacing:.06em; border:1px solid currentColor}
+.pill.d0{color:var(--accent2)}
+.pill.d1{color:var(--accent)}
+
+/* ---- alpha cards ------------------------------------------------------- */
+.alpha{border:1px solid var(--rule); background:var(--surface); margin-top:28px}
+.alpha-head{padding:22px 24px 0}
+.alpha-head .idline{display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+  font-family:var(--mono); font-size:.72rem; color:var(--muted); letter-spacing:.06em}
+.alpha-head h3{margin:10px 0 0}
+.alpha-body{display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:0}
+@media (max-width:820px){.alpha-body{grid-template-columns:1fr}}
+.alpha-left{padding:18px 24px 24px}
+.alpha-right{padding:18px 24px 24px; border-left:1px solid var(--rule)}
+@media (max-width:820px){.alpha-right{border-left:0; border-top:1px solid var(--rule)}}
+pre.expr{margin:0 0 16px; background:var(--sunk); border:1px solid var(--rule);
+  padding:13px 14px; overflow-x:auto; font-family:var(--mono); font-size:.76rem;
+  line-height:1.6; color:var(--ink); white-space:pre-wrap; word-break:break-word}
+.reading{font-size:.92rem; color:var(--ink2); margin:0}
+.reading code{background:var(--sunk); padding:1px 4px; border:1px solid var(--rule)}
+.why{margin:14px 0 0; font-size:.9rem; padding-left:14px; border-left:2px solid var(--accent)}
+.metricgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px 8px; margin:0 0 18px}
+.metricgrid div{min-width:0}
+.metricgrid .k{font-family:var(--mono); font-size:.64rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted)}
+.metricgrid .v{font-size:1.05rem; font-variant-numeric:tabular-nums; margin-top:2px}
+
+/* ---- misc -------------------------------------------------------------- */
+ul.clean{margin:0 0 1.1em; padding-left:1.15em}
+ul.clean li{margin-bottom:.5em}
+.rulebox{border:1px solid var(--rule); background:var(--surface); padding:20px 22px; margin:26px 0 0}
+.rulebox .eyebrow{margin-bottom:10px; display:block}
+.formula{font-family:var(--mono); font-size:.94rem; background:var(--sunk);
+  border:1px solid var(--rule); padding:12px 14px; margin:12px 0; overflow-x:auto}
+footer.page{margin-top:72px; padding-top:26px; border-top:1px solid var(--rule);
+  font-size:.82rem; color:var(--muted)}
+footer.page code{color:var(--ink2)}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important}}
+</style>
+
+<div class="wrap">
+
+<header class="page">
+  <div class="eyebrow">WorldQuant BRAIN &#xb7; 2026</div>
+  <h1>WorldQuant International Quant Championship</h1>
+  <p class="lede">
+    578th of 22,085 teams worldwide, 15th in the United States. Thirty-six alphas submitted out of
+    31,448 simulations, drawn from published factor research, dataset sweeps, an LLM research
+    pipeline and systematic expansion. What decided the outcome was not signal quality &#x2014; it
+    was knowing which terms in the scoring function were cheap, and building a book of uncorrelated
+    positions rather than a collection of individually good ones.
+  </p>
+  <div class="byline">mpmsds123 &#xb7; University of Southern California &#xb7; written August 2026</div>
+</header>
+
+<section id="result">
+  <div class="col">
+    <div class="eyebrow">Result</div>
+    <h2>Where it finished</h2>
+    <p class="section-note">Final standing on the Stage 2 competition leaderboard</p>
+  </div>
+
+  <div class="tiles">
+    <div class="tile lead">
+      <div class="k">Final standing</div>
+      <div class="v" id="t-s2">&#x2014;</div>
+      <div class="s" id="t-s2s">&#x2014;</div>
+    </div>
+    <div class="tile">
+      <div class="k">United States</div>
+      <div class="v" id="t-us">&#x2014;</div>
+      <div class="s" id="t-uss">&#x2014;</div>
+    </div>
+    <div class="tile">
+      <div class="k">Alphas in the book</div>
+      <div class="v" id="t-n">&#x2014;</div>
+      <div class="s" id="t-ns">&#x2014;</div>
+    </div>
+    <div class="tile">
+      <div class="k">Data families used</div>
+      <div class="v" id="t-fam">&#x2014;</div>
+      <div class="s">options, news, earnings, analyst models, credit, fundamentals, price-volume</div>
+    </div>
+    <div class="tile">
+      <div class="k">Simulations run</div>
+      <div class="v" id="t-sim">&#x2014;</div>
+      <div class="s">Apr 7 &#x2013; Jul 2, 2026</div>
+    </div>
+  </div>
+
+  <div class="col">
+    <p style="margin-top:26px">
+      The competition runs in stages: an open qualifying window, then a scored window on the field
+      that carries forward. Alphas are submitted to a shared pool and scored as a <em>basket</em>,
+      in-sample over 2019&#x2013;2023 and out-of-sample from 2024, with credit for returns that
+      other people's alphas do not already have.
+    </p>
+    <p>
+      Between my first submission window and my second, my competition score went from 2,270 to
+      9,374. What follows is the reconstruction of why &#x2014; from the 36 alphas themselves,
+      their day-by-day simulated PnL, and the search that produced them.
+    </p>
+  </div>
+</section>
+
+<section id="rules">
+  <div class="col">
+    <div class="eyebrow">The scoring</div>
+    <h2>What a submission has to clear</h2>
+    <p class="section-note">Thresholds taken from the checks attached to my own 36 submissions</p>
+    <p>
+      An alpha on BRAIN is an expression that outputs one number per stock per day. The platform
+      turns those numbers into dollar-neutral position weights, simulates them on a fixed
+      $20M book from 2019 to 2023, and reports the usual statistics. A submission is only
+      accepted if it passes a fixed battery of checks. These are the limits the platform actually
+      applied to me:
+    </p>
+  </div>
+
+  <div class="tablewrap col" style="max-width:none">
+    <table id="limits-table">
+      <thead><tr><th>Check</th><th>Limit applied</th><th>What it stops</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="rulebox col" style="max-width:none">
+    <span class="eyebrow">The one identity worth memorising</span>
+    <p style="margin:0">
+      Ranking is driven by <strong>fitness</strong>, not Sharpe, and fitness is not a free
+      parameter &#x2014; it is this:
+    </p>
+    <div class="formula">fitness = Sharpe &#xd7; &#x221a;( |returns| / max(turnover, 0.125) )</div>
+    <p style="margin:0; font-size:.9rem; color:var(--ink2)">
+      I checked it against all 36 of my own submissions rather than trusting the documentation:
+      maximum absolute error <span class="mono" id="fit-err">&#x2014;</span> across the set, which is
+      rounding. Read it and the strategy falls out. Turnover sits under a square root and is
+      <em>floored at 0.125</em>, so cutting turnover from 0.50 to 0.125 multiplies fitness by 2,
+      and cutting it below 0.125 buys nothing at all. Returns also sit under the square root.
+      Sharpe is the only term that is linear. But Sharpe is also the term every competitor is
+      already grinding on, which makes it the most expensive place to look for the next 10%.
+    </p>
+  </div>
+</section>
+
+<section id="pipeline">
+  <div class="col">
+    <div class="eyebrow">Where the alphas came from</div>
+    <h2>Four sources, one filter</h2>
+    <p class="section-note">Every scanner batch assigned to the source it was actually written from</p>
+    <p>
+      Candidate expressions came from four places. <strong>Paper replication</strong> &#x2014; taking
+      a published finding and restating it as an expression, which is a translation problem more than
+      a coding one. <strong>Dataset sweeps</strong>, where I read one dataset's field documentation
+      end to end and then swept its fields through a template. An <strong>LLM research pipeline</strong>
+      built on an MCP server that hands a model the simulation API, a vector
+      index of the platform's own documentation and an arXiv search tool, and has it propose
+      expressions against a named dataset. And <strong>systematic expansion</strong>, crossing
+      operators with fields with no prior about which combinations should work.
+    </p>
+    <p>
+      All four feed the same filter. An expression is only a candidate once it clears the
+      submission gate, and only worth a slot once it is also uncorrelated with what I already hold.
+    </p>
+  </div>
+
+  <figure>
+    <div class="fig-title">What each source actually returned</div>
+    <div class="fig-sub">Share of that source's distinct expressions that clear the submission gate. Same gate, same simulator, same universe.</div>
+    <div class="chart-scroll"><svg id="sources" role="img" aria-label="Hit rate by alpha source"></svg></div>
+    <figcaption id="sources-cap">&#x2014;</figcaption>
+  </figure>
+
+  <div class="col">
+    <p style="margin-top:26px">
+      The ordering is the useful part, and it is not the one I expected. Reading a dataset properly
+      beat everything. Systematic expansion consumed more compute than the other three combined and
+      returned the second-worst rate. And replication came last &#x2014; a published effect is
+      published, so by the time it reaches a shared alpha pool it is both well known and heavily
+      correlated with what everyone else has already submitted.
+    </p>
+    <p>
+      What replication is actually for is the <em>conclusion</em>: the claim a paper makes about why
+      a price should move. Copying its formula reproduces a crowded factor. Taking its claim and
+      re-expressing it &#x2014; different field, different horizon, a condition the original did not
+      have &#x2014; produces something the pool has not already priced. The highest-fitness alpha in
+      this book began as a published result about option-implied information and only worked once it
+      was gated on positioning and given a horizon of its own.
+    </p>
+    <p>
+      That translation step is where the operators earn their keep. The five expressions below use
+      the same small vocabulary throughout:
+    </p>
+    <ul class="clean">
+      <li><code>vector_neut(signal, exposure)</code> &#x2014; project out the risk factor a signal is
+        secretly loading on, so what is left is the idea rather than the exposure.</li>
+      <li><code>group_rank(x, bucket(rank(cap), &hellip;))</code> &#x2014; compare a company against
+        genuine peers instead of the whole universe, which is what stops a ratio from becoming a size bet.</li>
+      <li><code>trade_when(condition, x, -1)</code> &#x2014; hold no position when the condition fails,
+        rather than taking the opposite side of a signal that is simply absent.</li>
+      <li><code>hump(x, threshold)</code> &#x2014; refuse to trade on noise-level readings; the single
+        cheapest way to pull turnover down without touching the signal.</li>
+      <li><code>ts_backfill</code>, <code>winsorize(std=4)</code>,
+        <code>quantile(driver=gaussian)</code> &#x2014; make a sparse, fat-tailed field usable at all
+        before asking whether it predicts anything.</li>
+    </ul>
+  </div>
+
+  <figure>
+    <div class="fig-title">From simulation to submission</div>
+    <div class="fig-sub">Each stage is a filter, not a category &#x2014; the bars are counts of expressions surviving to that point.</div>
+    <div class="chart-scroll"><svg id="funnel" role="img" aria-label="Funnel from 31,448 simulations down to 36 submitted alphas"></svg></div>
+    <figcaption id="funnel-cap">&#x2014;</figcaption>
+  </figure>
+</section>
+
+<section id="change">
+  <div class="col">
+    <div class="eyebrow">The mechanism</div>
+    <h2>The score is not won on Sharpe</h2>
+    <p class="section-note">Median of the first 10 submissions versus median of the next 26</p>
+    <p>
+      The clearest evidence sits in my own two submission windows. Between them the median Sharpe
+      of what I submitted went <em>down</em>, and the competition score went up four-fold. Every
+      term that moved in the right direction is a term other people were not competing over.
+    </p>
+  </div>
+
+  <figure>
+    <div class="fig-title">Change in the median submitted alpha, first window &#x2192; second</div>
+    <div class="fig-sub">Bars run left and right of zero. Direction is not quality &#x2014; a fall in turnover and a fall in drawdown are both improvements.</div>
+    <div class="chart-scroll"><svg id="changeChart" role="img" aria-label="Percentage change in median alpha statistics between stage 1 and stage 2"></svg></div>
+    <figcaption id="change-cap">&#x2014;</figcaption>
+  </figure>
+
+  <div class="col">
+    <p style="margin-top:26px">
+      Turnover is the headline: the median alpha went from turning over 12.4% of the book a day to
+      7.3%. Because turnover enters fitness under a square root, that alone is worth about a third
+      more fitness at unchanged Sharpe and returns. Margin &#x2014; profit per dollar traded &#x2014;
+      rose 52%, which is the same fact from the other side: an edge that survives being traded less
+      often is a real edge, and one that needs constant churn usually is not.
+    </p>
+    <p>
+      The second change does not show up in any per-alpha statistic at all. The first ten alphas
+      drew on seven data families; the next twenty-six drew on nineteen, and eighteen of the
+      twenty-six use a family the first ten never touched. Median self-correlation against my own existing
+      submissions fell from 0.36 to 0.30. The competition scores a <em>basket</em>, and a basket
+      pays more for an alpha that is merely good and unlike the others than for one that is
+      excellent and duplicated.
+    </p>
+  </div>
+
+  <figure>
+    <div class="fig-title">All 36 alphas, turnover against Sharpe</div>
+    <div class="fig-sub">The second window fills in the low-turnover left side of the plot. Labelled points are the five alphas described above; the rest are plotted without identifiers.</div>
+    <div class="legend" id="scatter-legend"></div>
+    <div class="chart-scroll"><svg id="scatter" role="img" aria-label="Scatter plot of turnover against Sharpe for all 36 alphas, split by stage"></svg></div>
+    <figcaption id="scatter-cap">&#x2014;</figcaption>
+  </figure>
+</section>
+
+<section id="book">
+  <div class="col">
+    <div class="eyebrow">The book</div>
+    <h2>What 36 uncorrelated alphas do that one good one cannot</h2>
+    <p class="section-note">Equal weight, each alpha on its own $20M simulated book, 2019&#x2013;2023</p>
+    <p>
+      Adding up the simulated PnL of all 36 gives the basket the competition was actually scoring.
+      It is not a live track record and I would not present it as one &#x2014; every one of these curves
+      is in-sample over the same five years, chosen partly <em>because</em> it looked like this.
+      The useful number is not the level. It is the smoothness.
+    </p>
+  </div>
+
+  <figure>
+    <div class="fig-title">Combined simulated PnL, all 36 alphas equally weighted</div>
+    <div class="fig-sub">Month-end cumulative, in millions of dollars, on an aggregate book of $720M. Hover for the month.</div>
+    <div class="chart-scroll"><svg id="port" role="img" aria-label="Combined cumulative simulated PnL of all 36 alphas, 2019 to 2023"></svg></div>
+    <figcaption id="port-cap">&#x2014;</figcaption>
+  </figure>
+
+  <div class="tiles">
+    <div class="tile">
+      <div class="k">Median single alpha</div>
+      <div class="v" id="b-single">&#x2014;</div>
+      <div class="s">worst month-end drawdown, share of its own book</div>
+    </div>
+    <div class="tile lead">
+      <div class="k">All 36 together</div>
+      <div class="v" id="b-comb">&#x2014;</div>
+      <div class="s">worst month-end drawdown, share of aggregate book</div>
+    </div>
+    <div class="tile">
+      <div class="k">Reduction</div>
+      <div class="v" id="b-ratio">&#x2014;</div>
+      <div class="s">same measurement basis, same five years</div>
+    </div>
+  </div>
+
+  <div class="col">
+    <p style="margin-top:26px">
+      That factor is the entire argument for breadth. Nothing in it required a better alpha &#x2014;
+      it required <em>different</em> alphas. The Stage 2 submissions bear that out: eighteen of the
+      twenty-six draw on a dataset family that appears nowhere in Stage 1.
+    </p>
+  </div>
+</section>
+
+<section id="alphas">
+  <div class="col">
+    <div class="eyebrow">Six of the thirty-six</div>
+    <h2>The alphas, and what I think each one is picking up</h2>
+    <p class="section-note">Expressions exactly as submitted. Statistics from the platform's own simulation.</p>
+    <p>
+      Five from Stage 2, one from Stage 1 for contrast. The readings are my interpretation of what
+      the signal is doing economically; the expressions and the numbers are not.
+    </p>
+  </div>
+  <div id="alpha-cards"></div>
+</section>
+
+<section id="roster">
+  <div class="col">
+    <div class="eyebrow">The book</div>
+    <h2>The shape of all 36</h2>
+    <p class="section-note">Range and median across the whole book. Individual expressions beyond the five above are not published.</p>
+  </div>
+  <div class="tablewrap col" style="max-width:none">
+    <table id="summary-table">
+      <thead><tr><th>Statistic</th><th>Lowest</th><th>Median</th><th>Highest</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<section id="lessons">
+  <div class="col">
+    <div class="eyebrow">What transfers</div>
+    <h2>Four things I would tell anyone starting this</h2>
+    <ul class="clean">
+      <li>
+        <strong>Derive the objective before optimising anything.</strong> Fitness is
+        <span class="mono">Sharpe &#xd7; &#x221a;(|returns| / max(turnover, 0.125))</span>. Turnover and
+        returns sit under a square root; turnover has a floor that tells you exactly where the
+        payoff stops. Sharpe is the only linear term, and it is also the one every other competitor
+        is already grinding on &#x2014; which makes it the most expensive place to look for the next
+        ten percent.
+      </li>
+      <li>
+        <strong>Aim the search at a dataset, not at the operator space.</strong> Sweeps written
+        against documentation I had actually read cleared the gate at 1.86%; crossing operators with
+        fields blindly cleared it at 0.48%, having consumed nearly three fifths of all the compute.
+        Compute is not the constraint; knowing what a field means is.
+      </li>
+      <li>
+        <strong>Treat correlation as a design constraint, not a check to pass.</strong> An alpha
+        that duplicates one you already hold adds almost nothing to a basket, however good it looks
+        alone. The slot is better spent on a dataset you have never opened.
+      </li>
+      <li>
+        <strong>Orthogonalize on purpose.</strong> Several signals here are really volatility or
+        size bets in disguise until the exposure is explicitly removed &#x2014; ranking inside cap
+        buckets, neutralizing on subindustry, projecting out realized volatility. That step usually
+        costs raw Sharpe and is usually still worth it.
+      </li>
+    </ul>
+  </div>
+</section>
+
+<footer class="page">
+  <p>
+    <strong>Provenance.</strong> Every statistic on this page is derived from data pulled from the
+    WorldQuant BRAIN API for my own account &#x2014; the 36 submitted alpha records with their simulation
+    settings, in-sample statistics and check results, and the daily PnL recordset for each. Ranks
+    and field sizes are from the competition leaderboards. The funnel counts come from 34 local
+    scanner log files plus a day-by-day count of simulations from the API. Expressions for the five
+    featured alphas are reproduced exactly as submitted; the remaining thirty-one are summarised in
+    aggregate only. The page is generated by
+    <code>build.py</code> from those files: every figure in the tiles, charts, captions and tables is
+    computed at build time. Figures quoted in the running prose are those same computed numbers,
+    restated.
+  </p>
+  <p>
+    <strong>Caveats.</strong> All simulation statistics are in-sample over 2019&#x2013;2023 on the
+    platform's USA equity universe, and the alphas were selected on that same window. The platform's
+    PnL recordset carries no entry for March 2020, so that month is absent from every curve here.
+    Nothing on this page is a live track record.
+  </p>
+</footer>
+
+</div>
+
+<div class="tt" id="tt" role="status" aria-live="polite"></div>
+
+<script id="payload" type="application/json">/*__DATA__*/null</script>
+<script>
+(function(){
+"use strict";
+const D = JSON.parse(document.getElementById("payload").textContent);
+const css = k => getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+const NS = "http://www.w3.org/2000/svg";
+const fmt = (n,d=0) => n.toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d});
+
+function el(tag, attrs, parent){
+  const n = document.createElementNS(NS, tag);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(n);
+  return n;
+}
+function clear(svg){ while(svg.firstChild) svg.removeChild(svg.firstChild); }
+
+/* ---- tooltip ----------------------------------------------------------- */
+const tt = document.getElementById("tt");
+function showTip(html, x, y){
+  tt.innerHTML = html; tt.style.opacity = 1;
+  const r = tt.getBoundingClientRect();
+  let left = x + 14, top = y - r.height - 12;
+  if (left + r.width > window.innerWidth - 8) left = x - r.width - 14;
+  if (top < 8) top = y + 18;
+  tt.style.left = left + "px"; tt.style.top = top + "px";
+}
+function hideTip(){ tt.style.opacity = 0; }
+
+/* ---- tiles ------------------------------------------------------------- */
+const R = D.rank;
+document.getElementById("t-s2").textContent = fmt(R.s2.rank);
+document.getElementById("t-s2s").textContent =
+  "of " + fmt(R.s2.of) + " teams \u00b7 top " + (R.s2.rank/R.s2.of*100).toFixed(1) +
+  "% \u00b7 score " + fmt(R.s2.score);
+document.getElementById("t-us").textContent = R.s2.us_rank + "th";
+document.getElementById("t-uss").textContent =
+  "of " + R.s2.us_of + " United States teams in the same stage";
+document.getElementById("t-n").textContent = D.counts.submitted;
+document.getElementById("t-ns").textContent =
+  D.counts.s1 + " in the first window, " + D.counts.s2 + " in the second";
+document.getElementById("t-sim").textContent = fmt(D.counts.sims);
+document.getElementById("t-fam").textContent = D.counts.families;
+document.getElementById("fit-err").textContent = D.fitErr.toFixed(4);
+
+/* ---- limits table ------------------------------------------------------ */
+const LIMIT_COPY = {
+  LOW_SHARPE:            ["Sharpe \u2265 1.58 (delay 1) \u00b7 \u2265 2.69 (delay 0)", "signals too weak to survive costs"],
+  LOW_FITNESS:           ["Fitness \u2265 1.0", "high Sharpe bought with ruinous turnover"],
+  LOW_TURNOVER:          ["Turnover \u2265 0.01", "an alpha that never trades"],
+  HIGH_TURNOVER:         ["Turnover \u2264 0.70", "an alpha that trades the book away"],
+  LOW_SUB_UNIVERSE_SHARPE:["Sharpe \u2265 0.55\u20131.00 on the sub-universe", "edge that lives in a handful of names"],
+  LOW_2Y_SHARPE:         ["Sharpe \u2265 1.58 over the last 2 years", "an alpha that stopped working recently"],
+  IS_LADDER_SHARPE:      ["Sharpe holds up on 1\u20135 year windows", "one lucky year carrying the whole record"],
+  CLUSTER_TEST:          ["Correlation against the platform's alpha clusters", "resubmitting a known factor"]
+};
+{
+  const tb = document.querySelector("#limits-table tbody");
+  Object.keys(LIMIT_COPY).forEach(k => {
+    const tr = document.createElement("tr");
+    const c = LIMIT_COPY[k];
+    tr.innerHTML = "<td>" + k + "</td><td style='text-align:left'>" + c[0] +
+                   "</td><td style='text-align:left; white-space:normal; color:var(--ink2)'>" + c[1] + "</td>";
+    tb.appendChild(tr);
+  });
+}
+
+/* ---- funnel ------------------------------------------------------------ */
+{
+  const svg = document.getElementById("funnel");
+  const W = 900, rowH = 60, padL = 232, padR = 110, padT = 10;
+  const H = padT + D.funnel.length * rowH;
+  svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+  svg.setAttribute("width", W); svg.setAttribute("height", H);
+  const max = D.funnel[0][1];
+  const w = v => Math.max(3, (W - padL - padR) * Math.sqrt(v/max));
+  // ramp5 is the step furthest from the surface in either mode, so it lands on
+  // the survivors -- the shortest bars are the ones that must stay visible
+  const ramp = ["--ramp1","--ramp2","--ramp3","--ramp4","--ramp5"].map(css);
+  D.funnel.forEach((row, i) => {
+    const y = padT + i*rowH;
+    el("text",{x:padL-14, y:y+21, "text-anchor":"end", class:"dlabel"},svg).textContent = row[0];
+    const bw = w(row[1]);
+    const r = el("rect",{x:padL, y:y+4, width:bw, height:22, rx:4, fill:ramp[i]},svg);
+    el("title",{},r).textContent = row[0] + ": " + fmt(row[1]);
+    el("text",{x:padL+bw+10, y:y+20, class:"dlabel"},svg).textContent = fmt(row[1]);
+    el("text",{x:padL, y:y+42, class:"dlabel sub"},svg).textContent = row[2];
+    if (i < D.funnel.length-1)
+      el("line",{x1:padL-200,y1:y+rowH-8,x2:W-padR,y2:y+rowH-8,class:"gridline"},svg);
+  });
+  document.getElementById("funnel-cap").textContent =
+    "Bar length is proportional to the square root of the count \u2014 a linear scale would render the last two bars invisible. " +
+    "The gate keeps " + (D.counts.gate/D.counts.unique*100).toFixed(2) + "% of distinct expressions; " +
+    "I submitted " + (D.counts.submitted/D.counts.gate*100).toFixed(0) + "% of those.";
+}
+
+/* ---- sources ----------------------------------------------------------- */
+{
+  const rows = D.sources;
+  const svg = document.getElementById("sources");
+  const W = 900, padL = 210, padR = 200, rowH = 62, padT = 14;
+  const H = padT + rows.length*rowH + 30;
+  svg.setAttribute("viewBox","0 0 "+W+" "+H); svg.setAttribute("width",W); svg.setAttribute("height",H);
+  const max = Math.max(...rows.map(r=>r.rate)) * 1.12;
+  const x = v => padL + (W-padL-padR) * (v/max);
+  for (let g=0; g<=3; g++){
+    const v = max*g/3;
+    el("line",{x1:x(v),y1:padT,x2:x(v),y2:padT+rows.length*rowH-14,class:"gridline"},svg);
+    el("text",{x:x(v),y:padT+rows.length*rowH+2,"text-anchor":"middle",class:"tick"},svg)
+      .textContent = v.toFixed(1)+"%";
+  }
+  el("line",{x1:padL,y1:padT,x2:padL,y2:padT+rows.length*rowH-14,class:"axisline"},svg);
+  const ramp = ["--ramp5","--ramp4","--ramp3","--ramp2"].map(css);
+  rows.forEach((r,i)=>{
+    const y = padT + i*rowH + 4;
+    el("text",{x:padL-14,y:y+17,"text-anchor":"end",class:"dlabel"},svg).textContent = r.label;
+    const bw = x(r.rate) - padL;
+    const rect = el("rect",{x:padL,y:y,width:Math.max(2,bw),height:24,rx:4,fill:ramp[i]||ramp[3]},svg);
+    el("title",{},rect).textContent = r.label+": "+r.pass+" of "+fmt(r.n);
+    el("text",{x:padL+bw+10,y:y+17,class:"dlabel"},svg).textContent =
+      r.rate.toFixed(2)+"%   "+r.pass+" of "+fmt(r.n);
+    el("text",{x:padL,y:y+40,class:"dlabel sub"},svg).textContent = r.note;
+  });
+  el("text",{x:padL,y:H-2,class:"axlabel"},svg).textContent = "share clearing the submission gate";
+  const tot = rows.reduce((a,r)=>a+r.n,0);
+  const top = rows[0], worst = rows[rows.length-1];
+  document.getElementById("sources-cap").textContent =
+    fmt(tot) + " distinct expressions in total. " + top.label + " cleared the gate at " +
+    top.rate.toFixed(2) + "%, " + (top.rate/worst.rate).toFixed(1) + "\u00d7 the rate of " +
+    worst.label.toLowerCase() + ". Systematic expansion alone accounts for " +
+    (rows.find(r=>r.label==="Systematic expansion").n/tot*100).toFixed(0) +
+    "% of everything simulated.";
+}
+
+/* ---- stage change ------------------------------------------------------ */
+{
+  const svg = document.getElementById("changeChart");
+  const rows = D.change;
+  const W = 900, padL = 200, padR = 210, rowH = 44, padT = 24;
+  const H = padT + rows.length*rowH + 30;
+  svg.setAttribute("viewBox","0 0 "+W+" "+H); svg.setAttribute("width",W); svg.setAttribute("height",H);
+  const lim = Math.max(...rows.map(r=>Math.abs(r.pct))) * 1.25;
+  const mid = padL + (W-padL-padR)/2;
+  const x = v => mid + ((W-padL-padR)/2) * (v/lim);
+  [-lim/2, 0, lim/2].forEach(v=>{
+    el("line",{x1:x(v),y1:padT-6,x2:x(v),y2:padT+rows.length*rowH,
+               class: v===0 ? "axisline":"gridline"},svg);
+    el("text",{x:x(v),y:padT-12,"text-anchor":"middle",class:"tick"},svg)
+      .textContent = (v>0?"+":"") + v.toFixed(0) + "%";
+  });
+  const fm = (v,u) => u==="pct" ? (v*100).toFixed(1)+"%"
+                   : u==="bps" ? (v*10000).toFixed(1)+" bps"
+                   : u==="frac" ? v.toFixed(3) : v.toFixed(2);
+  rows.forEach((r,i)=>{
+    const y = padT + i*rowH + 9;
+    el("text",{x:padL-14,y:y+17,"text-anchor":"end",class:"dlabel"},svg).textContent = r.label;
+    const x0 = Math.min(mid, x(r.pct)), bw = Math.abs(x(r.pct)-mid);
+    const rect = el("rect",{x:x0,y:y,width:Math.max(2,bw),height:24,rx:4,fill:css("--accent")},svg);
+    el("title",{},rect).textContent = r.label+": "+fm(r.s1,r.unit)+" \u2192 "+fm(r.s2,r.unit);
+    el("text",{x:W-padR+14,y:y+17,class:"dlabel"},svg).textContent =
+      fm(r.s1,r.unit) + "  \u2192  " + fm(r.s2,r.unit);
+    el("text",{x: r.pct>=0 ? x(r.pct)+8 : x(r.pct)-8, y:y+17,
+               "text-anchor": r.pct>=0 ? "start":"end", class:"dlabel sub"},svg)
+      .textContent = (r.pct>0?"+":"") + r.pct.toFixed(0) + "%";
+  });
+  el("text",{x:padL,y:H-4,class:"axlabel"},svg).textContent = "change in the median alpha";
+  el("text",{x:W-padR+14,y:H-4,class:"axlabel"},svg).textContent = "S1 \u2192 S2";
+  const sc = D.selfcorr;
+  document.getElementById("change-cap").textContent =
+    "Not a per-alpha statistic, so not shown above: median self-correlation fell from " +
+    sc.S1.median.toFixed(2) + " (" + sc.S1.over_half + " of " + sc.S1.n + " above 0.5) to " +
+    sc.S2.median.toFixed(2) + " (" + sc.S2.over_half + " of " + sc.S2.n + "), while the count of " +
+    "submissions went from " + sc.S1.n + " to " + sc.S2.n + ".";
+}
+
+/* ---- scatter ----------------------------------------------------------- */
+{
+  const svg = document.getElementById("scatter");
+  const W = 900, H = 400, padL = 62, padR = 62, padT = 26, padB = 52;
+  svg.setAttribute("viewBox","0 0 "+W+" "+H); svg.setAttribute("width",W); svg.setAttribute("height",H);
+  const pts = D.scatter;
+  const xs = pts.map(p=>p.t), ys = pts.map(p=>p.s);
+  const lx = v => Math.log10(v);
+  const x0 = lx(Math.min(...xs)*0.85), x1 = lx(Math.max(...xs)*1.15);
+  const y0 = Math.min(...ys)-0.15, y1 = Math.max(...ys)+0.15;
+  const X = v => padL + (W-padL-padR)*(lx(v)-x0)/(x1-x0);
+  const Y = v => H-padB - (H-padT-padB)*(v-y0)/(y1-y0);
+  [0.02,0.05,0.1,0.2,0.5].forEach(v=>{
+    el("line",{x1:X(v),y1:padT,x2:X(v),y2:H-padB,class:"gridline"},svg);
+    el("text",{x:X(v),y:H-padB+18,"text-anchor":"middle",class:"tick"},svg).textContent = v;
+  });
+  for(let v=1.25; v<=2.5; v+=0.25){
+    if(v<y0||v>y1) continue;
+    el("line",{x1:padL,y1:Y(v),x2:W-padR,y2:Y(v),class:"gridline"},svg);
+    el("text",{x:padL-10,y:Y(v)+4,"text-anchor":"end",class:"tick"},svg).textContent = v.toFixed(2);
+  }
+  el("line",{x1:padL,y1:H-padB,x2:W-padR,y2:H-padB,class:"axisline"},svg);
+  el("line",{x1:padL,y1:padT,x2:padL,y2:H-padB,class:"axisline"},svg);
+  el("text",{x:W-padR,y:H-8,"text-anchor":"end",class:"axlabel"},svg).textContent = "turnover (log scale)";
+  el("text",{x:padL-46,y:padT+4,class:"axlabel"},svg).textContent = "sharpe";
+  const COL = {S1: css("--accent2"), S2: css("--accent")};
+  pts.forEach(p=>{
+    const g = el("g",{},svg);
+    el("circle",{cx:X(p.t),cy:Y(p.s),r:7,fill:"none",stroke:css("--surface"),"stroke-width":2},g);
+    const c = el("circle",{cx:X(p.t),cy:Y(p.s),r:5.5,fill:COL[p.stage],
+                           "fill-opacity":.85, style:"cursor:pointer"},g);
+    c.addEventListener("mouseenter", e => showTip(
+      "<b>"+(p.id ? p.id : "alpha "+p.n+" of 36")+"</b><br>"+
+      "<span class='m'>Sharpe "+p.s.toFixed(2)+" \u00b7 turnover "+p.t.toFixed(3)+
+      "<br>fitness "+p.f.toFixed(2)+" \u00b7 margin "+p.m.toFixed(0)+" bps</span>",
+      e.clientX, e.clientY));
+    c.addEventListener("mouseleave", hideTip);
+  });
+  // direct labels on the five alphas written up above, so the plot ties to the cards
+  const notable = pts.filter(p=>p.id);
+  const seen = new Set();
+  notable.forEach(p=>{
+    if(seen.has(p.id)) return; seen.add(p.id);
+    const lx = Math.max(padL+34, Math.min(W-padR-34, X(p.t)));
+    el("text",{x:lx, y:Y(p.s)-12, "text-anchor":"middle", class:"dlabel sub"},svg)
+      .textContent = p.id;
+  });
+  const lg = document.getElementById("scatter-legend");
+  lg.innerHTML =
+    "<span><i class='swatch' style='background:"+COL.S2+"'></i>Second window &mdash; "+D.counts.s2+" alphas</span>" +
+    "<span><i class='swatch' style='background:"+COL.S1+"'></i>First window &mdash; "+D.counts.s1+" alphas</span>";
+  const s1t = pts.filter(p=>p.stage==="S1").map(p=>p.t).sort((a,b)=>a-b);
+  const s2t = pts.filter(p=>p.stage==="S2").map(p=>p.t).sort((a,b)=>a-b);
+  document.getElementById("scatter-cap").textContent =
+    "Turnover is on a log scale because the range spans 30\u00d7. The first ten run " +
+    s1t[0].toFixed(3)+"\u2013"+s1t[s1t.length-1].toFixed(3)+"; the next twenty-six run "+
+    s2t[0].toFixed(3)+"\u2013"+s2t[s2t.length-1].toFixed(3)+". The vertical spread is barely different \u2014 " +
+    "the horizontal one is the whole story.";
+}
+
+/* ---- portfolio line ---------------------------------------------------- */
+{
+  const svg = document.getElementById("port");
+  const P = D.portfolio;
+  const months = Object.keys(P).sort();
+  const vals = months.map(m=>P[m]/1000);           // $M
+  const W = 900, H = 340, padL = 62, padR = 74, padT = 16, padB = 46;
+  svg.setAttribute("viewBox","0 0 "+W+" "+H); svg.setAttribute("width",W); svg.setAttribute("height",H);
+  const vmax = Math.max(...vals)*1.06;
+  const X = i => padL + (W-padL-padR)*i/(months.length-1);
+  const Y = v => H-padB - (H-padT-padB)*(v/vmax);
+  for(let v=0; v<=200; v+=50){
+    el("line",{x1:padL,y1:Y(v),x2:W-padR,y2:Y(v),class:"gridline"},svg);
+    el("text",{x:padL-10,y:Y(v)+4,"text-anchor":"end",class:"tick"},svg).textContent = "$"+v+"M";
+  }
+  ["2019","2020","2021","2022","2023"].forEach(y=>{
+    const i = months.indexOf(y+"-01");
+    if(i<0) return;
+    el("line",{x1:X(i),y1:padT,x2:X(i),y2:H-padB,class:"gridline"},svg);
+    el("text",{x:X(i),y:H-padB+18,"text-anchor":"middle",class:"tick"},svg).textContent = y;
+  });
+  el("line",{x1:padL,y1:H-padB,x2:W-padR,y2:H-padB,class:"axisline"},svg);
+  const d = vals.map((v,i)=>(i?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)).join(" ");
+  el("path",{d: d+" L"+X(vals.length-1).toFixed(1)+" "+Y(0)+" L"+padL+" "+Y(0)+" Z",
+             fill:css("--accent-soft"), stroke:"none"},svg);
+  el("path",{d:d, fill:"none", stroke:css("--accent"), "stroke-width":2,
+             "stroke-linejoin":"round","stroke-linecap":"round"},svg);
+  const last = vals.length-1;
+  el("circle",{cx:X(last),cy:Y(vals[last]),r:4.5,fill:css("--accent"),
+               stroke:css("--surface"),"stroke-width":2},svg);
+  el("text",{x:X(last)+10,y:Y(vals[last])+4,class:"dlabel"},svg)
+    .textContent = "$"+vals[last].toFixed(0)+"M";
+  // crosshair
+  const cross = el("line",{x1:0,y1:padT,x2:0,y2:H-padB,class:"axisline",opacity:0},svg);
+  const dot = el("circle",{r:4.5,fill:css("--accent"),stroke:css("--surface"),"stroke-width":2,opacity:0},svg);
+  const hit = el("rect",{x:padL,y:padT,width:W-padL-padR,height:H-padT-padB,
+                         fill:"transparent",style:"cursor:crosshair"},svg);
+  hit.addEventListener("mousemove", e=>{
+    const box = svg.getBoundingClientRect();
+    const px = (e.clientX-box.left)/box.width*W;
+    let i = Math.round((px-padL)/(W-padL-padR)*(months.length-1));
+    i = Math.max(0, Math.min(months.length-1, i));
+    cross.setAttribute("x1",X(i)); cross.setAttribute("x2",X(i)); cross.setAttribute("opacity",.6);
+    dot.setAttribute("cx",X(i)); dot.setAttribute("cy",Y(vals[i])); dot.setAttribute("opacity",1);
+    showTip("<b>"+months[i]+"</b><br><span class='m'>$"+vals[i].toFixed(1)+"M cumulative</span>",
+            e.clientX, e.clientY);
+  });
+  hit.addEventListener("mouseleave", ()=>{
+    cross.setAttribute("opacity",0); dot.setAttribute("opacity",0); hideTip();
+  });
+  const B = D.book;
+  document.getElementById("port-cap").textContent =
+    "$"+(B.final/1e6).toFixed(1)+"M cumulative on an aggregate book of $"+(B.aggregate/1e6).toFixed(0)+
+    "M \u2014 "+B.cum_pct.toFixed(1)+"% over five years, or about "+(B.cum_pct/5).toFixed(1)+
+    "% a year before any cost assumption the platform does not already make. March 2020 is missing from the platform's PnL record.";
+}
+
+/* ---- book tiles -------------------------------------------------------- */
+{
+  const B = D.book;
+  document.getElementById("b-single").textContent = B.single_mdd_pct.toFixed(2)+"%";
+  document.getElementById("b-comb").textContent = B.mdd_pct.toFixed(2)+"%";
+  document.getElementById("b-ratio").textContent = B.ratio.toFixed(0)+"\u00d7";
+}
+
+/* ---- alpha cards ------------------------------------------------------- */
+{
+  const host = document.getElementById("alpha-cards");
+  D.featured.forEach(f=>{
+    const card = document.createElement("div");
+    card.className = "alpha";
+    const mk = Object.keys(f.metrics).map(k =>
+      "<div><div class='k'>"+k+"</div><div class='v'>"+f.metrics[k]+"</div></div>").join("");
+    card.innerHTML =
+      "<div class='alpha-head'>" +
+        "<div class='idline'><span class='pill d"+f.delay+"'>delay "+f.delay+"</span>" +
+        "<span>"+f.id+"</span><span>submitted "+f.date+"</span><span>"+f.family+"</span></div>" +
+        "<h3>"+f.title+"</h3>" +
+      "</div>" +
+      "<div class='alpha-body'>" +
+        "<div class='alpha-left'>" +
+          "<pre class='expr'>"+f.code.replace(/&/g,"&amp;").replace(/</g,"&lt;")+"</pre>" +
+          "<p class='reading'>"+f.reading+"</p>" +
+          "<p class='why'>"+f.why+"</p>" +
+        "</div>" +
+        "<div class='alpha-right'>" +
+          "<div class='metricgrid'>"+mk+"</div>" +
+          "<div class='chart-scroll'><svg class='spark' data-id='"+f.id+"' role='img' aria-label='Cumulative simulated PnL for alpha "+f.id+"'></svg></div>" +
+          "<div class='dlabel sub' style='font-size:.74rem;color:var(--muted);margin-top:8px;font-family:var(--mono)'>" +
+            f.settings + "</div>" +
+        "</div>" +
+      "</div>";
+    host.appendChild(card);
+  });
+
+  document.querySelectorAll("svg.spark").forEach(svg=>{
+    const f = D.featured.find(x=>x.id===svg.dataset.id);
+    const months = Object.keys(f.pnl).sort();
+    const vals = months.map(m=>f.pnl[m]/1000);       // $M
+    const W = 320, H = 108, padL = 4, padR = 52, padT = 10, padB = 20;
+    svg.setAttribute("viewBox","0 0 "+W+" "+H);
+    svg.setAttribute("width",W); svg.setAttribute("height",H);
+    const lo = Math.min(0, ...vals), hi = Math.max(...vals);
+    const X = i => padL + (W-padL-padR)*i/(months.length-1);
+    const Y = v => H-padB - (H-padT-padB)*(v-lo)/((hi-lo)||1);
+    el("line",{x1:padL,y1:Y(0),x2:W-padR,y2:Y(0),class:"gridline"},svg);
+    const d = vals.map((v,i)=>(i?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)).join(" ");
+    el("path",{d:d+" L"+X(vals.length-1).toFixed(1)+" "+Y(0)+" L"+padL+" "+Y(0)+" Z",
+               fill:css("--accent-soft"),stroke:"none"},svg);
+    el("path",{d:d,fill:"none",stroke:css("--accent"),"stroke-width":2,
+               "stroke-linejoin":"round","stroke-linecap":"round"},svg);
+    const L = vals.length-1;
+    el("circle",{cx:X(L),cy:Y(vals[L]),r:3.5,fill:css("--accent"),
+                 stroke:css("--surface"),"stroke-width":2},svg);
+    el("text",{x:X(L)+8,y:Y(vals[L])+4,class:"dlabel"},svg).textContent = "$"+vals[L].toFixed(1)+"M";
+    el("text",{x:padL,y:H-4,class:"axlabel"},svg).textContent = "2019 \u2013 2023 cumulative";
+    const hit = el("rect",{x:0,y:0,width:W,height:H,fill:"transparent",style:"cursor:crosshair"},svg);
+    hit.addEventListener("mousemove", e=>{
+      const box = svg.getBoundingClientRect();
+      let i = Math.round(((e.clientX-box.left)/box.width*W - padL)/(W-padL-padR)*(months.length-1));
+      i = Math.max(0, Math.min(months.length-1, i));
+      showTip("<b>"+months[i]+"</b><br><span class='m'>$"+vals[i].toFixed(2)+"M \u00b7 "+f.id+"</span>",
+              e.clientX, e.clientY);
+    });
+    hit.addEventListener("mouseleave", hideTip);
+  });
+}
+
+/* ---- book summary ------------------------------------------------------ */
+{
+  const tb = document.querySelector("#summary-table tbody");
+  D.summary.forEach(r=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>"+r.label+"</td><td>"+r.min+"</td><td>"+r.med+"</td><td>"+r.max+"</td>";
+    tb.appendChild(tr);
+  });
+}
+})();
+</script>

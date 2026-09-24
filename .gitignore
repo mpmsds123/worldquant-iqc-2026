@@ -1,0 +1,7 @@
+# the full 36 expressions stay local — the repo ships data/submitted_alphas.json,
+# which nulls out everything outside the five alphas written up on the page
+data/submitted_alphas_raw.json
+
+.DS_Store
+__pycache__/
+*.pyc
